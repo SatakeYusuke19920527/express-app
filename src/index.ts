@@ -1,6 +1,7 @@
 import express from 'express'
 const app: express.Express = express()
 const usersRouter = require('./v1/index')
+const fullwebRouter = require('./v2/index')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -13,8 +14,10 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   next();
 })
 
-app.use("/v1/users", usersRouter)
+app.use("/v1", usersRouter)
+app.use("/v2/", fullwebRouter)
 
-app.listen(4000, () => {
-  console.log("Start on port 4000.")
+const PORT = process.env.SERVER_PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`port is running : ${PORT}`)
 })
