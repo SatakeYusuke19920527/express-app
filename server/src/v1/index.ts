@@ -1,9 +1,9 @@
 import express from 'express';
-import fullweb from './fullweb';
+const users = require('./users');
 
 const router = express.Router();
 
 // v1以下のルーティング
-router.use('/fullweb', fullweb);
+router.use('/users', users);
 
 module.exports = router;

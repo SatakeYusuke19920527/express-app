@@ -1,10 +1,9 @@
 import express from 'express'
+const userRouter = require('./v1/index')
 const app: express.Express = express()
-const usersRouter = require('./v1/index')
-const fullwebRouter = require('./v2/index')
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use("/v1", userRouter)
 
 //CROS対応（というか完全無防備：本番環境ではだめ絶対）
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -14,10 +13,6 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   next();
 })
 
-app.use("/v1", usersRouter)
-app.use("/v2/", fullwebRouter)
-
-const PORT = process.env.SERVER_PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`port is running : ${PORT}`)
+app.listen(4000, () => {
+  console.log("Start on port 4000.")
 })
